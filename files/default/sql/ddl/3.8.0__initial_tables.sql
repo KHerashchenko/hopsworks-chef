@@ -2578,3 +2578,14 @@ CREATE TABLE IF NOT EXISTS `hopsworks`.`model_link` (
   CONSTRAINT `model_version_id_fkc` FOREIGN KEY (`model_version_id`) REFERENCES `hopsworks`.`model_version` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `training_dataset_parent_fkc` FOREIGN KEY (`parent_training_dataset_id`) REFERENCES `hopsworks`.`training_dataset` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+CREATE TABLE IF NOT EXISTS `decision_engine` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` varchar(255) COLLATE latin1_general_ci NOT NULL,
+    `config_file_path` varchar(1024) COLLATE latin1_general_cs NOT NULL,
+    `use_case` int(11) NOT NULL DEFAULT '0',
+    `project_id` int(11) NOT NULL,
+    `job_id` INT(11) NOT NULL,
+    CONSTRAINT `job_decision_engine_fk` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT `project_idx_decision_engine` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
