@@ -2586,6 +2586,9 @@ CREATE TABLE IF NOT EXISTS `decision_engine` (
     `use_case` int(11) NOT NULL DEFAULT '0',
     `project_id` int(11) NOT NULL,
     `job_id` INT(11) NOT NULL,
-    CONSTRAINT `job_decision_engine_fk` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT `project_idx_decision_engine` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+    UNIQUE KEY `decision_engine_key` (`name`, `project_id`),
+    CONSTRAINT `project_idx_decision_engine_fk` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+    CONSTRAINT `job_idx_decision_engine_fk` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT `job_id_constraint_key` UNIQUE (`job_id`)
 ) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
